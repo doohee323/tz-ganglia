@@ -58,6 +58,7 @@ do
 	
 	clusters+="data_source \"cluster-$i\" 60 localhost:$i\n"
 	
+	echo start gmond-$i
 	start gmond-$i
 done
 
@@ -93,7 +94,7 @@ iptables-restore < /etc/iptables/rules
 ##########################################
 apt-get install fail2ban sendmail -y
 cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
-sed -i "s/^destemail.*/destemail = andrewy@lasdorf.com/g" /etc/fail2ban/jail.local
+sed -i "s/^destemail.*/destemail = doohee323@gmail.com/g" /etc/fail2ban/jail.local
 sed -i "s/^action = %(action_)s/action = %(action_mwl)s/g" /etc/fail2ban/jail.local
 service fail2ban stop
 service fail2ban start
