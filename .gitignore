@@ -1,0 +1,5 @@
+.vagrant
+.boxes
+.project
+.classpath
+.settings
