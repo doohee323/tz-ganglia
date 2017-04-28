@@ -34,9 +34,9 @@ stop gmetad
 rm /etc/init.d/ganglia-monitor
 rm /etc/init.d/gmetad
 
-##########################################
+###############################################################
 # modify ganglia-monitor configs and its upstart jobs
-##########################################
+###############################################################
 clusters=""
 
 for i in 8649; 
@@ -70,11 +70,8 @@ rm /etc/ganglia/gmond.conf
 # modify gmetad
 ##########################################
 sed -i "s/data_source \"my cluster\" localhost/$clusters/g" /etc/ganglia/gmetad.conf
-sed -i "s/# carbon_server \"my.graphite.box\"/carbon_server $GRAPHITE/g" /etc/ganglia/gmetad.conf
-
-#Need to figure out if we can use udp for this UDP 
-#sed -i "s/# carbon_protocol udp/carbon_protocol udp/g" /etc/ganglia/gmetad.conf
-sed -i "s/# graphite_prefix \"datacenter1.gmetad\"/graphite_prefix \"ganglia\"/g" /etc/ganglia/gmetad.conf
+sed -i "s/# carbon_server \"my.node1.box\"/carbon_server $NODE1/g" /etc/ganglia/gmetad.conf
+sed -i "s/# node1_prefix \"datacenter1.gmetad\"/node1_prefix \"ganglia\"/g" /etc/ganglia/gmetad.conf
 
 start gmetad
 /etc/init.d/apache2 start

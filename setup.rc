@@ -1,4 +1,4 @@
 # DO NOT EDIT - AUTO GENERATED FROM setup.conf
 
 cfg_ip_ganglia-web="192.168.82.190"
-cfg_graphite_server="192.168.82.11"
+cfg_node1_server="192.168.82.11"
