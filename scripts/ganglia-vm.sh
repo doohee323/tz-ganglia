@@ -8,6 +8,6 @@ source /vagrant/setup.rc
 export DEBIAN_FRONTEND=noninteractive
 
 export NODE=ganglia-vm
-export NODE1=192.168.82.180
+export NODE1=192.168.82.11
 
 bash /vagrant/scripts/ganglia-web.sh

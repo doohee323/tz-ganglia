@@ -50,7 +50,6 @@ sudo ln -s /etc/nginx/sites-available/ganglia /etc/nginx/sites-enabled/ganglia
 sudo cp /vagrant/etc/nginx/ganglia /etc/nginx/sites-available/ganglia
 sudo service nginx stop
 sudo nginx -s stop
-sudo nginx
 
 ##########################################
 # first stop main gmond (ganglia-monitor) and gmetad processes
@@ -59,7 +58,7 @@ stop ganglia-monitor
 stop gmetad
 /etc/init.d/gmetad stop
 /etc/init.d/ganglia-monitor stop
-/etc/init.d/apache2 stop
+#/etc/init.d/apache2 stop
 
 rm /etc/init.d/ganglia-monitor
 rm /etc/init.d/gmetad
@@ -104,7 +103,8 @@ sed -i "s/# carbon_server \"my.node1.box\"/carbon_server $NODE1/g" /etc/ganglia/
 sed -i "s/# node1_prefix \"datacenter1.gmetad\"/node1_prefix \"ganglia\"/g" /etc/ganglia/gmetad.conf
 
 start gmetad
-/etc/init.d/apache2 start
+#/etc/init.d/apache2 start
+sudo nginx
 
 ##########################################
 # firewall rules
