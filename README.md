@@ -26,6 +26,7 @@ This is a Ganglia server example on vagrant.
 
 # Run
 ```
+ 	http://192.168.82.169
  	http://192.168.82.169/ganglia/
 ```
 
