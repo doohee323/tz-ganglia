@@ -34,4 +34,3 @@ dump_config_as_bashrc($vg_config, File.join(File.dirname(__FILE__),"setup.rc"))
 
 
 
-
