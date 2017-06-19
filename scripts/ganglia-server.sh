@@ -27,10 +27,6 @@ sudo chown -R www-data:www-data /usr/share/ganglia-webfrontend/
 
 #sudo ufw --force enable
 sudo ufw allow "Nginx HTTP"
-sudo ufw allow 8653/tcp
-sudo ufw allow 8653/udp
-sudo ufw allow 8649/tcp
-sudo ufw allow 8649/udp
 sudo ufw reload
 #sudo ufw status verbose
 
@@ -46,6 +42,16 @@ sudo service nginx stop
 sudo nginx -s stop
 
 ##########################################
+# firewall rules
+##########################################
+sudo mkdir -p /etc/iptables
+sudo cp /vagrant/etc/iptables/rules /etc/iptables/rules
+
+sudo sed -i "s/^iptables-restore//g" /etc/network/if-up.d/iptables
+sudo sh -c "echo 'iptables-restore < /etc/iptables/rules' >> /etc/network/if-up.d/iptables"
+sudo iptables-restore < /etc/iptables/rules
+
+##########################################
 # first stop main gmond (ganglia-monitor) and gmetad processes
 ##########################################
 sudo cp /vagrant/etc/ganglia/server/gmond.conf /etc/ganglia/gmond.conf
@@ -59,18 +65,6 @@ service gmetad restart
 
 sudo nginx -s stop
 sudo nginx
-
-exit 0
-
-##########################################
-# firewall rules
-##########################################
-mkdir -p /etc/iptables
-cp /vagrant/etc/iptables/rules /etc/iptables/rules
-
-sed -i "s/^iptables-restore//g" /etc/network/if-up.d/iptables
-echo "iptables-restore < /etc/iptables/rules" >> /etc/network/if-up.d/iptables
-iptables-restore < /etc/iptables/rules
 
 ##########################################
 # install failtoban

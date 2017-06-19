@@ -6,15 +6,25 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get -y update
 apt-get -y upgrade
 
-apt-get install -y ganglia-monitor
+##########################################
+# firewall rules
+##########################################
+sudo mkdir -p /etc/iptables
+sudo cp /vagrant/etc/iptables/rules /etc/iptables/rules
+
+sudo sed -i "s/^iptables-restore//g" /etc/network/if-up.d/iptables
+sudo sh -c "echo 'iptables-restore < /etc/iptables/rules' >> /etc/network/if-up.d/iptables"
+sudo iptables-restore < /etc/iptables/rules
 
 ##########################################
-# first stop main gmond (ganglia-monitor) and gmetad processes
+# install ganglia
 ##########################################
-sudo cp /vagrant/etc/ganglia/server/gmond.conf /etc/ganglia/gmond.conf
-service ganglia-monitor restart 
+sudo apt-get install ganglia-monitor -y
 
-exit 0
+sudo cp /vagrant/etc/ganglia/client/gmond.conf /etc/ganglia/gmond.conf
+sudo sed -i "s/MONITORNODE/$cfg_ip_ganglia-server/g" /etc/ganglia/gmond.conf
+sudo sed -i "s/THISNODEID/$cfg_ip_ganglia-client/g" /etc/ganglia/gmond.conf
+sudo /etc/init.d/ganglia-monitor restart
 
 ##########################################
 # install failtoban
