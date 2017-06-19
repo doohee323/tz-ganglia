@@ -17,16 +17,6 @@ apt-get install -y ganglia-monitor
 sudo cp /vagrant/etc/ganglia/server/gmond.conf /etc/ganglia/gmond.conf
 service ganglia-monitor restart 
 
-##########################################
-# firewall rules
-##########################################
-mkdir -p /etc/iptables
-cp /vagrant/etc/iptables/rules /etc/iptables/rules
-
-sed -i "s/^iptables-restore//g" /etc/network/if-up.d/iptables
-echo "iptables-restore < /etc/iptables/rules" >> /etc/network/if-up.d/iptables
-iptables-restore < /etc/iptables/rules
-
 exit 0
 
 ##########################################

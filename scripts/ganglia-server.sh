@@ -51,7 +51,10 @@ service ganglia-monitor restart
 sudo cp /vagrant/etc/ganglia/server/gmetad.conf /etc/ganglia/gmetad.conf
 service gmetad restart
 
+sudo nginx -s stop
 sudo nginx
+
+exit 0
 
 ##########################################
 # firewall rules
@@ -62,8 +65,6 @@ cp /vagrant/etc/iptables/rules /etc/iptables/rules
 sed -i "s/^iptables-restore//g" /etc/network/if-up.d/iptables
 echo "iptables-restore < /etc/iptables/rules" >> /etc/network/if-up.d/iptables
 iptables-restore < /etc/iptables/rules
-
-exit 0
 
 ##########################################
 # install failtoban
