@@ -19,9 +19,9 @@ sudo apt-get remove --purge apache2  -y
 sudo apt-get autoclean -y 
 sudo apt-get autoremove -y
 
-#sudo add-apt-repository ppa:nginx/development
+sudo add-apt-repository ppa:nginx/development
 sudo apt-get update 
-sudo apt-get install nginx php7.0 php7.0-fpm php7.0-gd -y
+sudo apt-get install nginx php5 php5-fpm php5-gd -y
 
 sudo chown -R www-data:www-data /usr/share/ganglia-webfrontend/
 
