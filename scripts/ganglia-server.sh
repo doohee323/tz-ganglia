@@ -1,9 +1,6 @@
 sudo su
 set -x
 
-echo "Reading config...." >&2
-source /vagrant/setup.rc
-
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get -y update
@@ -22,14 +19,20 @@ sudo apt-get remove --purge apache2  -y
 sudo apt-get autoclean -y 
 sudo apt-get autoremove -y
 
-sudo add-apt-repository ppa:nginx/development
+#sudo add-apt-repository ppa:nginx/development
 sudo apt-get update 
-sudo apt-get install nginx php5 php5-fpm php5-gd -y
+sudo apt-get install nginx php7.0 php7.0-fpm php7.0-gd -y
 
 sudo chown -R www-data:www-data /usr/share/ganglia-webfrontend/
 
+sudo ufw --force enable
 sudo ufw allow "Nginx HTTP"
+sudo ufw allow 8653/tcp
+sudo ufw allow 8653/udp
+sudo ufw allow 8649/tcp
+sudo ufw allow 8649/udp
 sudo ufw reload
+sudo ufw status verbose
 
 sudo rm -rf /var/www/html/
 sudo rm /etc/nginx/sites-available/default

@@ -1,9 +1,6 @@
 sudo su
 set -x
 
-echo "Reading config...." >&2
-source /vagrant/setup.rc
-
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get -y update
