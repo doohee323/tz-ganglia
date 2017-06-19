@@ -25,14 +25,14 @@ sudo apt-get install nginx php5 php5-fpm php5-gd -y
 
 sudo chown -R www-data:www-data /usr/share/ganglia-webfrontend/
 
-sudo ufw --force enable
+#sudo ufw --force enable
 sudo ufw allow "Nginx HTTP"
 sudo ufw allow 8653/tcp
 sudo ufw allow 8653/udp
 sudo ufw allow 8649/tcp
 sudo ufw allow 8649/udp
 sudo ufw reload
-sudo ufw status verbose
+#sudo ufw status verbose
 
 sudo rm -rf /var/www/html/
 sudo rm /etc/nginx/sites-available/default
@@ -53,6 +53,9 @@ service ganglia-monitor restart
 
 sudo cp /vagrant/etc/ganglia/server/gmetad.conf /etc/ganglia/gmetad.conf
 service gmetad restart
+
+#sudo service ganglia-monitor stop 
+#sudo service gmetad stop
 
 sudo nginx -s stop
 sudo nginx

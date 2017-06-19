@@ -1,4 +1,4 @@
 # DO NOT EDIT - AUTO GENERATED FROM setup.conf
 
-cfg_ip_ganglia-server="192.168.201.227"
-cfg_ip_ganglia-client="192.168.201.201"
+cfg_ip_ganglia-server="192.168.82.227"
+cfg_ip_ganglia-client="192.168.82.201"
