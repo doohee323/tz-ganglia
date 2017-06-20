@@ -23,12 +23,19 @@ sudo iptables-restore < /etc/iptables/rules
 # install ganglia
 ##########################################
 sudo apt-get install ganglia-monitor -y
-#sudo apt-get purge ganglia-monitor -y
 
 sudo cp /vagrant/etc/ganglia/client/gmond.conf /etc/ganglia/gmond.conf
 sudo sed -i "s/MONITORNODE/$cfg_ip_gserver/g" /etc/ganglia/gmond.conf
 sudo sed -i "s/THISNODEID/$cfg_ip_gclient/g" /etc/ganglia/gmond.conf
-sudo /etc/init.d/ganglia-monitor restart
-#sudo /etc/init.d/ganglia-monitor stop
+
+# test process
+sudo apt-get remove --purge apache2  -y
+sudo apt-get autoclean -y 
+sudo apt-get autoremove -y
+sudo apt-get install nginx -y
+sudo ufw allow "Nginx HTTP"
+sudo ufw reload
+sudo service nginx stop
+sudo nginx -s stop
 
 exit 0

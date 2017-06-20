@@ -10,10 +10,6 @@ apt-get -y update
 apt-get -y upgrade
 
 apt-get install -y ganglia-monitor rrdtool gmetad ganglia-webfrontend
-#service ganglia-monitor stop 
-#service gmetad stop
-#apt-get purge -y ganglia-monitor gmetad
-#rm -Rf /etc/ganglia
 
 ###############################################################
 # install nginx
@@ -28,10 +24,8 @@ sudo apt-get install nginx php5 php5-fpm php5-gd -y
 
 sudo chown -R www-data:www-data /usr/share/ganglia-webfrontend/
 
-#sudo ufw --force enable
 sudo ufw allow "Nginx HTTP"
 sudo ufw reload
-#sudo ufw status verbose
 
 sudo rm -rf /var/www/html/
 sudo rm /etc/nginx/sites-available/default
@@ -64,9 +58,6 @@ sudo cp /vagrant/etc/ganglia/server/gmond.conf /etc/ganglia/gmond.conf
 sudo sed -i "s/MONITORNODE/localhost/g" /etc/ganglia/gmond.conf
 sudo sed -i "s/THISNODEID/localhost/g" /etc/ganglia/gmond.conf
 sudo /etc/init.d/ganglia-monitor restart
-
-#sudo service gmetad stop
-#sudo /etc/init.d/ganglia-monitor stop 
 
 sudo nginx -s stop
 sudo nginx
