@@ -27,6 +27,7 @@ sudo apt-get install ganglia-monitor -y
 sudo cp /vagrant/etc/ganglia/client/gmond.conf /etc/ganglia/gmond.conf
 sudo sed -i "s/MONITORNODE/$cfg_ip_gserver/g" /etc/ganglia/gmond.conf
 sudo sed -i "s/THISNODEID/$cfg_ip_gclient/g" /etc/ganglia/gmond.conf
+sudo /etc/init.d/ganglia-monitor restart
 
 # test process
 sudo apt-get remove --purge apache2  -y
