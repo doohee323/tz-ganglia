@@ -11,9 +11,9 @@ Vagrant.configure("2") do |config|
   $config['ip'].each do | host_name, host_ip |
     config.vm.define "#{host_name}" do |node|
       node.vm.box = "ubuntu/trusty64"
-      node.vm.hostname = "ganglia-local"
-      node.vm.network :private_network, ip: "192.168.82.169"
-      node.vm.provision "shell", :path => File.join(File.dirname(__FILE__),"scripts/ganglia-vm.sh") 
+      node.vm.hostname = "#{host_name}"
+      node.vm.network :private_network, ip: host_ip
+      node.vm.provision "shell", :path => File.join(File.dirname(__FILE__),"scripts/#{host_name}.sh"), :args => node.vm.hostname 
       
       node.vm.provider :virtualbox do |vb|
          vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
@@ -21,5 +21,5 @@ Vagrant.configure("2") do |config|
       end
     end
   end
-end
 
+end
