@@ -14,42 +14,13 @@ apt-get install -y ganglia-monitor rrdtool gmetad ganglia-webfrontend
 ##########################################
 # apache2 setting
 ##########################################
-#cp /etc/ganglia-webfrontend/apache.conf /etc/apache2/sites-enabled/ganglia.conf
-#rm /etc/apache2/sites-enabled/000-default.conf
+cp /etc/ganglia-webfrontend/apache.conf /etc/apache2/sites-enabled/ganglia.conf
+rm /etc/apache2/sites-enabled/000-default.conf
 
-#sudo sh -c "echo '' >> /etc/apache2/apache2.conf"
-#sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
+sudo sh -c "echo '' >> /etc/apache2/apache2.conf"
+sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
  
-#/etc/init.d/apache2 restart
-#service apache2 restart
-#service apache2 stop
-
-###############################################################
-# install nginx
-###############################################################
-sudo apt-get remove --purge apache2  -y
-sudo apt-get autoclean -y 
-sudo apt-get autoremove -y
-
-sudo add-apt-repository ppa:nginx/development
-sudo apt-get update 
-sudo apt-get install nginx php5 php5-fpm php5-gd -y
-
-sudo chown -R www-data:www-data /usr/share/ganglia-webfrontend/
-
-sudo ufw allow "Nginx HTTP"
-sudo ufw reload
-
-sudo rm -rf /var/www/html/
-sudo rm /etc/nginx/sites-available/default
-sudo rm /etc/nginx/sites-enabled/default
-
-sudo touch /etc/nginx/sites-available/ganglia
-sudo ln -s /etc/nginx/sites-available/ganglia /etc/nginx/sites-enabled/ganglia
-
-sudo cp /vagrant/etc/nginx/ganglia /etc/nginx/sites-available/ganglia
-sudo service nginx stop
-sudo nginx -s stop
+/etc/init.d/apache2 restart
 
 ##########################################
 # first stop main gmond (ganglia-monitor) and gmetad processes
@@ -58,7 +29,7 @@ stop ganglia-monitor
 stop gmetad
 /etc/init.d/gmetad stop
 /etc/init.d/ganglia-monitor stop
-#/etc/init.d/apache2 stop
+/etc/init.d/apache2 stop
 
 rm /etc/init.d/ganglia-monitor
 rm /etc/init.d/gmetad
@@ -99,12 +70,11 @@ rm /etc/ganglia/gmond.conf
 # modify gmetad
 ##########################################
 sed -i "s/data_source \"my cluster\" localhost/$clusters/g" /etc/ganglia/gmetad.conf
-sed -i "s/# carbon_server \"my.graphite.box\"/carbon_server $NODE1/g" /etc/ganglia/gmetad.conf
-sed -i "s/# graphite_prefix \"datacenter1.gmetad\"/graphite_prefix \"ganglia\"/g" /etc/ganglia/gmetad.conf
+sed -i "s/# carbon_server \"my.node1.box\"/carbon_server $NODE1/g" /etc/ganglia/gmetad.conf
+sed -i "s/# node1_prefix \"datacenter1.gmetad\"/node1_prefix \"ganglia\"/g" /etc/ganglia/gmetad.conf
 
 start gmetad
-#/etc/init.d/apache2 start
-sudo nginx
+/etc/init.d/apache2 start
 
 ##########################################
 # firewall rules
