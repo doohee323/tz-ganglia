@@ -16,11 +16,7 @@ This is a Ganglia server example on vagrant.
 
 # Run
 ```
-<<<<<<< HEAD
- 	http://192.168.82.169/ganglia/
-=======
  	http://192.168.82.227
->>>>>>> origin/nginx
 ```
 
 
