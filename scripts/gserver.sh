@@ -1,6 +1,9 @@
 sudo su
 set -x
 
+echo "Reading config...." >&2
+source /vagrant/setup.rc
+
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get -y update
@@ -54,27 +57,18 @@ sudo iptables-restore < /etc/iptables/rules
 ##########################################
 # first stop main gmond (ganglia-monitor) and gmetad processes
 ##########################################
-sudo cp /vagrant/etc/ganglia/server/gmond.conf /etc/ganglia/gmond.conf
-service ganglia-monitor restart 
-
 sudo cp /vagrant/etc/ganglia/server/gmetad.conf /etc/ganglia/gmetad.conf
 service gmetad restart
 
-#sudo service ganglia-monitor stop 
+sudo cp /vagrant/etc/ganglia/server/gmond.conf /etc/ganglia/gmond.conf
+sudo sed -i "s/MONITORNODE/localhost/g" /etc/ganglia/gmond.conf
+sudo sed -i "s/THISNODEID/localhost/g" /etc/ganglia/gmond.conf
+sudo /etc/init.d/ganglia-monitor restart
+
 #sudo service gmetad stop
+#sudo /etc/init.d/ganglia-monitor stop 
 
 sudo nginx -s stop
 sudo nginx
-
-##########################################
-# install failtoban
-##########################################
-apt-get install fail2ban sendmail -y
-cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
-sed -i "s/^destemail.*/destemail = doohee323@gmail.com/g" /etc/fail2ban/jail.local
-sed -i "s/^action = %(action_)s/action = %(action_mwl)s/g" /etc/fail2ban/jail.local
-service fail2ban stop
-service fail2ban start
-service rsyslog restart
 
 exit 0
