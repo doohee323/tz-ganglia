@@ -29,6 +29,7 @@ sudo sed -i "s/MONITORNODE/$cfg_ip_gserver/g" /etc/ganglia/gmond.conf
 sudo sed -i "s/THISNODEID/$cfg_ip_gclient/g" /etc/ganglia/gmond.conf
 sudo sed -i "s/deaf = no/deaf = yes/g" /etc/ganglia/gmond.conf
 sudo sed -i "s/mcast_join = 239.2.11.71/#mcast_join = 239.2.11.71/g" /etc/ganglia/gmond.conf
+sudo sed -i "s/bind = 239.2.11.71/#bind = 239.2.11.71/g" /etc/ganglia/gmond.conf
 sudo /etc/init.d/ganglia-monitor restart
 
 # test process
